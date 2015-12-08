@@ -18,6 +18,12 @@ const loaders = [{
  loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
 }];
 
+const aliases = {
+  components: path.resolve(CLIENT_DIR, 'components'),
+  //reducers: path.resolve(CLIENT_DIR, 'reducers'),
+  actions: path.resolve(CLIENT_DIR, 'actions')
+};
+
 module.exports = [{
   name: 'client',
   target: 'web',
@@ -32,9 +38,7 @@ module.exports = [{
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    alias: {
-      components: path.resolve(CLIENT_DIR, 'components')
-    }
+    alias: aliases
   },
   plugins: [
       new ExtractTextPlugin('bundle.css', {allChunks: true})
@@ -57,9 +61,8 @@ module.exports = [{
     loaders: loaders
   },
   resolve: {
-    alias: {
-      components: path.resolve(CLIENT_DIR, 'components')
-    }
+    extensions: ['', '.js', '.jsx'],
+    alias: aliases
   },
   plugins: [
     new ExtractTextPlugin('[name].css')
