@@ -7,6 +7,7 @@ export default React.createClass({
       <div className='message-entry-box'>
         <textarea
           name='message'
+          placeholder='Say what?!?!'
           value={this.props.value}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}/>

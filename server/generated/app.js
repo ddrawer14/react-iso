@@ -194,6 +194,7 @@ module.exports =
 	      { className: 'message-entry-box' },
 	      _react2.default.createElement('textarea', {
 	        name: 'message',
+	        placeholder: 'Say what?!?!',
 	        value: this.props.value,
 	        onChange: this.handleChange,
 	        onKeyPress: this.handleKeyPress })
