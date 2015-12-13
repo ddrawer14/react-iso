@@ -84,9 +84,10 @@ module.exports =
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(_MessageList2.default, { messages: this.props.messages }),
+	      _react2.default.createElement(_MessageList2.default, { userId: this.props.userId, messages: this.props.messages }),
 	      _react2.default.createElement(_MessageEntryBox2.default, {
 	        value: this.props.currentMessage,
+	        userId: this.props.userId,
 	        onChange: this.props.updateMessage,
 	        onSubmit: this.props.addMessage })
 	    );
@@ -96,6 +97,7 @@ module.exports =
 
 	function mapStateToProps(state) {
 	  return {
+	    userId: state.userId,
 	    messages: state.messages,
 	    currentMessage: state.currentMessage
 	  };
@@ -154,14 +156,21 @@ module.exports =
 	  displayName: 'MessageList',
 
 	  render: function render() {
+	    var _this = this;
+
 	    return _react2.default.createElement(
 	      'ol',
 	      { className: 'message-list' },
 	      this.props.messages.map(function (message, index) {
+	        var messageClass = message.userId !== _this.props.userId ? 'is-response' : '';
 	        return _react2.default.createElement(
 	          'li',
-	          { key: 'message-' + index },
-	          message.text
+	          { key: 'message-' + index, className: 'message-item' },
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'message ' + messageClass },
+	            message.text
+	          )
 	        );
 	      })
 	    );
@@ -206,7 +215,15 @@ module.exports =
 	  },
 	  handleKeyPress: function handleKeyPress(ev) {
 	    if (ev.which === 13) {
-	      this.props.onSubmit();
+	      var trimmedMessage = this.props.value.trim();
+
+	      if (trimmedMessage) {
+	        this.props.onSubmit({
+	          text: trimmedMessage,
+	          userId: this.props.userId
+	        });
+	      }
+
 	      ev.preventDefault();
 	    }
 	  }
@@ -223,15 +240,27 @@ module.exports =
 	});
 	exports.updateMessage = updateMessage;
 	exports.addMessage = addMessage;
+	exports.addResponse = addResponse;
+	exports.setUserId = setUserId;
 	var UPDATE_MESSAGE = exports.UPDATE_MESSAGE = 'update-message';
 	var ADD_MESSAGE = exports.ADD_MESSAGE = 'add-message';
+	var ADD_RESPONSE = exports.ADD_RESPONSE = 'add-response';
+	var SET_USER_ID = exports.SET_USER_ID = 'setUserId';
 
 	function updateMessage(message) {
 	  return { type: UPDATE_MESSAGE, message: message };
 	}
 
-	function addMessage() {
-	  return { type: ADD_MESSAGE };
+	function addMessage(message) {
+	  return { type: ADD_MESSAGE, message: message };
+	}
+
+	function addResponse(message) {
+	  return { type: ADD_RESPONSE, message: message };
+	}
+
+	function setUserId(userId) {
+	  return { type: SET_USER_ID, userId: userId };
 	}
 
 /***/ }

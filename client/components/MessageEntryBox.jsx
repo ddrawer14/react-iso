@@ -20,11 +20,18 @@ export default React.createClass({
   },
 
   handleKeyPress(ev) {
-    if (trimmedMessage) {
-      this.props.onSubmit({
-        text: trimmedMessage,
-        userId: this.props.userId
-      });
+    if (ev.which === 13) {
+      const trimmedMessage = this.props.value.trim();
+
+      if (trimmedMessage) {
+        this.props.onSubmit({
+          text: trimmedMessage,
+          userId: this.props.userId
+        });
+      }
+
+      ev.preventDefault();
+    }
   }
 
 })

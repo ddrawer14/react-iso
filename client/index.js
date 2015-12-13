@@ -6,7 +6,6 @@ import App from './components/App';
 import reducer from './reducer';
 import startChat, {chatMiddleware} from './chat';
 
-
 const initialState = window.INITIAL_STATE;
 const createStoreWithMiddleware = applyMiddleware(chatMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducer(initialState));
