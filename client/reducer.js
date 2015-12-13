@@ -1,31 +1,46 @@
-import {UPDATE_MESSAGE, ADD_MESSAGE} from 'actions/message-actions'
+import {combineReducers} from 'redux';
+import {
+  UPDATE_MESSAGE,
+  ADD_MESSAGE,
+  ADD_RESPONSE,
+  SET_USER_ID
+} from 'actions/message-actions'
 
 export default function (initialState) {
-  return (state=initialState, action) => {
-
-    switch(action.type) {
-
-      //currentMessage is updated
-      case UPDATE_MESSAGE:
-        return Object.assign({}, state, { currentMessage: action.message });
-
-      //currentMessage value is trimmed and added as new message to the messages list
+  function messages(currentMessages=initialState.messages, action) {
+    switch (action.type) {
       case ADD_MESSAGE:
-        const text = state.currentMessage.trim();
-        //if it’s not an empty string after trimming
-        if (text) {
-          //return new copy of the messages array
-          let messages = state.messages.map(message => Object.assign({}, message));
-          messages.push({id: messages.length + 1, text});
-
-          return {
-            messages,
-            currentMessage: ''  //value of currentMessage is reset
-          };
-        }
-
+      case ADD_RESPONSE:
+        let messages = currentMessages.map(message => Object.assign({}, message));
+        messages.push(Object.assign({}, action.message));
+        return messages;
       default:
-        return state;
+        return currentMessages;
     }
   }
+
+  function currentMessage(currentMessage=initialState.currentMessage, action) {
+    switch(action.type) {
+      case UPDATE_MESSAGE:
+        return action.message;
+      case ADD_MESSAGE:
+        return '';
+      default:
+        return currentMessage;
+    }
+  }
+
+  function userId(currentUserId=initialState.userId, action) {
+    if (action.type === SET_USER_ID) {
+      return action.userId;
+    }
+
+    return currentUserId;
+  }
+
+  return combineReducers({
+    currentMessage,
+    messages,
+    userId
+  });
 }
