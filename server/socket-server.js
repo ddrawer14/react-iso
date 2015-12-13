@@ -3,6 +3,7 @@ import io from 'socket.io';
 export default function (server) {
   const socketServer = io(server);
   const connections = [];
+
   var userId = 0;
 
   socketServer.on('connection', socket => {

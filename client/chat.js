@@ -8,14 +8,14 @@ export function chatMiddleware(store) {
      if (socket && action.type === actions.ADD_MESSAGE) {
       socket.emit('message', action.message);
     }
- 
+
     return next(action);
   };
 }
 
 export default function (store) {
   socket = io.connect(`${location.protocol}//${location.host}`);
-    
+
   socket.on('start', data => {
     store.dispatch(actions.setUserId(data.userId));
   });
