@@ -93,18 +93,19 @@ module.exports =
 	  }
 
 	});
-
+	//Injects values from State to the component properties
 	function mapStateToProps(state) {
 	  return {
 	    messages: state.messages,
 	    currentMessage: state.currentMessage
 	  };
 	}
-
+	//Injects action creator functions into the component properties
 	function mapDispatchToProps(dispatch) {
+	  //Add action creator functions
 	  return (0, _redux.bindActionCreators)(messageActionCreators, dispatch);
 	}
-
+	//Connects App component to the store by injecting state and dispatch into it
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ },
@@ -157,11 +158,15 @@ module.exports =
 	    return _react2.default.createElement(
 	      'ol',
 	      { className: 'message-list' },
+	      '//Expect list of messages',
 	      this.props.messages.map(function (message, index) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: 'message-' + index },
-	          message.text
+	        return(
+	          //return ordered list of messages w/ each message as a list item
+	          _react2.default.createElement(
+	            'li',
+	            { key: 'message-' + index },
+	            message.text
+	          )
 	        );
 	      })
 	    );
@@ -200,10 +205,12 @@ module.exports =
 	        onKeyPress: this.handleKeyPress })
 	    );
 	  },
-
+	  //Runs each time value of textarea changes
 	  handleChange: function handleChange(ev) {
 	    this.props.onChange(ev.target.value);
 	  },
+
+	  //Runs each time user presses a key inside textarea
 	  handleKeyPress: function handleKeyPress(ev) {
 	    if (ev.which === 13) {
 	      this.props.onSubmit();
@@ -223,6 +230,7 @@ module.exports =
 	});
 	exports.updateMessage = updateMessage;
 	exports.addMessage = addMessage;
+	//Action Creator functions
 	var UPDATE_MESSAGE = exports.UPDATE_MESSAGE = 'update-message';
 	var ADD_MESSAGE = exports.ADD_MESSAGE = 'add-message';
 

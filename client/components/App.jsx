@@ -21,16 +21,17 @@ var App = React.createClass({
   }
 
 });
-
+//Injects values from State to the component properties
 function mapStateToProps(state) {
   return {
     messages: state.messages,
     currentMessage: state.currentMessage
   };
 }
-
+//Injects action creator functions into the component properties
 function mapDispatchToProps(dispatch) {
+  //Add action creator functions
   return bindActionCreators(messageActionCreators, dispatch);
 }
-
+//Connects App component to the store by injecting state and dispatch into it
 export default connect(mapStateToProps, mapDispatchToProps)(App);

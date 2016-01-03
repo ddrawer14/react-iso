@@ -14,11 +14,11 @@ export default React.createClass({
       </div>
     );
   },
-
+  //Runs each time value of textarea changes
   handleChange(ev) {
     this.props.onChange(ev.target.value);
   },
-
+  //Runs each time user presses a key inside textarea
   handleKeyPress(ev) {
     if (ev.which === 13) {
       this.props.onSubmit();

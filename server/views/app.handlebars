@@ -1,4 +1,6 @@
+ {{! Root id on which to render App component}}
 <main id="app">{{{app}}}</main>
 <script>
+  //initial state (response from the server) is shared by defining a global variable named INITIAL_STATE on the window object
   window.INITIAL_STATE = {{{initialState}}}
 </script>
